@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import Navigation from "./components/Navigation";
 import TodoForm from "./components/TodoForm";
+import Card from "./components/Card";
 import "./App.css";
 import { todos } from "./todos.json";
 
@@ -11,6 +12,7 @@ class App extends Component {
       todos,
     };
     this.handleAddTodo = this.handleAddTodo.bind(this);
+    this.removeTask = this.removeTask.bind(this);
   }
 
   removeTodo(index) {
@@ -37,28 +39,15 @@ class App extends Component {
     const todos = this.state.todos.map(
       ({ title, description, priority, responsible }, index) => {
         return (
-          <div className="col-md-4 mt-4">
-            <div className="card">
-              <div className="card-header">
-                <h3>{title}</h3>
-                <span className="badge badge-pill badge-danger ml-2">
-                  {priority}
-                </span>
-              </div>
-              <div className="card-body">
-                <p>{description}</p>
-                <p>
-                  <mark className="px-3 badge-pill">{responsible}</mark>
-                </p>
-              </div>
-              <div
-                className="card-footer"
-                onClick={this.removeTask.bind(this, index)}
-              >
-                <button className="btn btn-danger">Remove</button>
-              </div>
-            </div>
-          </div>
+          <Card
+            key={index}
+            title={title}
+            description={description}
+            priority={priority}
+            responsible={responsible}
+            index={index}
+            onRemoveTask={this.removeTask}
+          />
         );
       }
     );
